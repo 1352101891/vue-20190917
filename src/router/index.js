@@ -12,7 +12,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'Main',
       component: Main,
       // 配置嵌套路由
@@ -40,7 +40,7 @@ export default new Router({
       ]
     },
     {
-      path: '/login',
+      path: '/',
       name: 'Login',
       component: Login
     }]

@@ -41,7 +41,7 @@ export default {
 <style scoped>
   .rootview{
     width: 100%;
-    height: 90%;
+    height: 100%;
   }
   h1, h2 {
     font-weight: normal;
