@@ -1,5 +1,6 @@
 var constants = {
   api: {
+    host: 'api/',
     // 用户相关
     login: '/user/login',
     register: '/user/register',
@@ -28,9 +29,13 @@ var constants = {
     // 搜索相关
     search: '/article/query/0/json',
     // 积分相关
-    userInfo: '/coin/rank/1/json',
+    userInfo: '/lg/coin/userinfo/json',
     coinRank: '/coin/rank/1/json',
-    userCoinList: '/lg/coin/list/1/json',
+    userCoinList: '/lg/coin/list/1/json'
+  },
+  code: {
+    logout: -1001,
+    success: 0
   }
 }
 

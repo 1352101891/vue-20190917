@@ -10,12 +10,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: { //代码中所有/api的形式统一用target替换
-      '/': {
+      '/api': {
         target: 'https://wanandroid.com/', //对应自己的接口
         changeOrigin: true, //允许跨域访问
         ws: true,
         pathRewrite: {
-          '^/': ''
+          '^/api': ''
         }
       }
     },
@@ -60,12 +60,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: { //代码中所有/api的形式统一用target替换
-      '/': {
+      '/api': {
         target: 'https://wanandroid.com/', //对应自己的接口
         changeOrigin: true, //允许跨域访问
         ws: true,
         pathRewrite: {
-          '^/': ''
+          '^/api': ''
         }
       }
     },

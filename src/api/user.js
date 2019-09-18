@@ -1,24 +1,25 @@
-import request from '@/utils/request'
+import request from '../utils/request'
+import constants from '../utils/Constants'
 
-export function login(data) {
+export function login (data) {
   return request({
-    url: '/user/login',
+    url: constants.api.login,
     method: 'post',
-    data
+    params: { data }
   })
 }
 
-export function getInfo(token) {
+export function getInfo (token) {
   return request({
-    url: '/user/info',
+    url: constants.api.userInfo,
     method: 'get',
     params: { token }
   })
 }
 
-export function logout() {
+export function logout () {
   return request({
-    url: '/user/logout',
+    url: constants.api.logout,
     method: 'post'
   })
 }

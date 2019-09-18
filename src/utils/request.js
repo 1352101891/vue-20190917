@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import constants from './Constants'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: constants.api.host, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
@@ -46,25 +46,38 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
-      Message({
-        message: res.message || 'Error',
-        type: 'error',
-        duration: 5 * 1000
+    if (res.code !== constants.code.success) {
+      const toast = this.$createToast({
+        time: 5 * 1000,
+        txt: res.message || 'Error'
       })
-
+      toast.show()
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        })
+      if (res.code === constants.code.logout) {
+        // 重新登陆
+        this.$createDialog({
+          type: 'confirm',
+          icon: 'cubeic-alert',
+          title: '提示',
+          content: '\'You have been logged out, you can cancel to stay on this page, or log in again\', \'Confirm logout\'',
+          confirmBtn: {
+            text: '确定',
+            active: true,
+            disabled: false,
+            href: 'javascript:;'
+          },
+          cancelBtn: {
+            text: '取消',
+            active: false,
+            disabled: true,
+            href: 'javascript:;'
+          },
+          onConfirm: () => {
+            store.dispatch('user/resetToken').then(() => {
+              location.reload()
+            })
+          }
+        }).show()
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
@@ -72,12 +85,12 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
+    console.log('err' + error)
+    const toast = this.$createToast({
+      time: 5 * 1000,
+      txt: error.message
     })
+    toast.show()
     return Promise.reject(error)
   }
 )
