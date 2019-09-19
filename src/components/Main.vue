@@ -27,7 +27,7 @@ export default {
         label: 'Classify',
         icon: 'cubeic-like'
       }, {
-        label: 'Circle',
+        label: 'Zone',
         icon: 'cubeic-vip'
       }, {
         label: 'Me',

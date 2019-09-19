@@ -44,9 +44,10 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
+    console.log(JSON.stringify(res))
 
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== constants.code.success) {
+    if (res.errorCode !== constants.code.success) {
       const toast = this.$createToast({
         time: 5 * 1000,
         txt: res.message || 'Error'

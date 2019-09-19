@@ -41,9 +41,9 @@ export default {
       type: 'password',
       placeholder: '请输入最多10位密码',
       readonly: true,
-      maxlength: 10,
+      maxlength: 20,
       eye: {
-        open: true,
+        open: false,
         reverse: false
       }
     }
@@ -55,7 +55,29 @@ export default {
       console.log('点击了注册')
     },
     login () {
-      console.log('用户登陆')
+      var that = this
+      if (!this.username || this.username.length < 3) {
+        const toast = that.$createToast({
+          txt: '用户名过短！',
+          time: 1000
+        })
+        toast.show()
+        return
+      }
+      let userInfo = {
+        username: this.username,
+        password: this.password
+      }
+      this.$store.dispatch('user/login', userInfo).then(() => {
+        console.log('用户登陆成功')
+        this.$router.replace('main')
+      }).catch(error => {
+        const toast = that.$createToast({
+          txt: '登陆失败：' + error.toString(),
+          time: 1000
+        })
+        toast.show()
+      })
     }
   }
 }

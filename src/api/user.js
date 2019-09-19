@@ -3,9 +3,9 @@ import constants from '../utils/Constants'
 
 export function login (data) {
   return request({
-    url: constants.api.login,
+    url: constants.api.login + '?username=' + data.username + '&password=' + data.password,
     method: 'post',
-    params: { data }
+    header: data
   })
 }
 
@@ -13,7 +13,7 @@ export function getInfo (token) {
   return request({
     url: constants.api.userInfo,
     method: 'get',
-    params: { token }
+    header: { token }
   })
 }
 

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'Circle',
+  name: 'Zone',
   data () {
     return {
       selectedLabelDefault: 'Home',
