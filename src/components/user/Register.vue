@@ -10,29 +10,33 @@
         <p class="pre-word">密码</p>
         <cube-input class="cube-input" v-model="password"
                     :placeholder="placeholder"
-                    :type="type"
                     :maxlength="maxlength"
                     :eye="eye" ></cube-input>
       </div>
       <div class="horizon-wrap">
-        <cube-button class="button" v-on:click="login" :primary="true">登陆</cube-button>
+        <p class="pre-word">确认密码</p>
+        <cube-input class="cube-input" v-model="surePassword"
+                    :placeholder="placeholder"
+                    :maxlength="maxlength"
+                    :eye="eye" ></cube-input>
       </div>
-    </div>
-    <div class="wrapper-bottom">
-      <p class="pre-word" v-on:click="gotoRegister">注册</p>
+      <div class="horizon-wrap">
+        <cube-button class="button" v-on:click="register" :primary="true">注册</cube-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Login',
+  name: 'Register',
   data () {
     return {
-      title: '欢迎来到玩安卓',
+      title: '注册',
       // 账号框
       username: '',
       password: '',
+      surePassword: '',
       clearable: {
         visible: true,
         blurHidden: true
@@ -45,22 +49,15 @@ export default {
       eye: {
         open: false,
         reverse: false
-      },
-      redirectPath: ''
+      }
     }
   },
   watch: {
   },
-  create () {
-    this.redirectPath = this.$route.query.redirect
-  },
   methods: {
-    gotoRegister () {
+    register () {
       console.log('点击了注册')
-      this.$router.push(this.redirectPath)
-    },
-    login () {
-      let that = this
+      var that = this
       if (!this.username || this.username.length < 3) {
         const toast = that.$createToast({
           txt: '用户名过短！',
@@ -69,20 +66,28 @@ export default {
         toast.show()
         return
       }
-      let userInfo = {
-        username: this.username,
-        password: this.password
-      }
-      this.$store.dispatch('user/login', userInfo).then(() => {
-        console.log('用户登陆成功')
-        this.$router.replace('main')
-      }).catch(error => {
+      if (this.password && this.surePassword && this.password === this.surePassword) {
+        let userInfo = {
+          username: this.username,
+          password: this.password
+        }
+        this.$store.dispatch('user/register', userInfo).then(() => {
+          console.log('用户登陆成功')
+          this.$router.replace('main')
+        }).catch(error => {
+          const toast = that.$createToast({
+            txt: '登陆失败：' + error.toString(),
+            time: 1000
+          })
+          toast.show()
+        })
+      } else {
         const toast = that.$createToast({
-          txt: '登陆失败：' + error.toString(),
+          txt: '两次密码输入不一致！',
           time: 1000
         })
         toast.show()
-      })
+      }
     }
   }
 }
@@ -121,10 +126,6 @@ export default {
   .wrapper-input{
     position: absolute;
     left:0; right:0; top:30%; bottom:0;
-  }
-  .wrapper-bottom{
-    position: absolute;
-    left:0; right:0; top:90%; bottom:0;
   }
   .button{
     width: 50%;height:40px;line-height:10px;margin: 10px auto;

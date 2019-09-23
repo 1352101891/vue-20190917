@@ -6,11 +6,16 @@ import Zone from '@/components/main/Zone'
 import Classify from '@/components/main/Classify'
 import Home from '@/components/main/Home'
 import Me from '@/components/main/Me'
+import Register from '@/components/user/Register'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/',
+      redirect: '/main'
+    },
     {
       path: '/main',
       name: 'Main',
@@ -40,8 +45,13 @@ export default new Router({
       ]
     },
     {
-      path: '/',
+      path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     }]
 })

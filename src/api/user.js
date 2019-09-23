@@ -23,3 +23,15 @@ export function logout () {
     method: 'post'
   })
 }
+
+/**
+ * username,password,repassword
+ * @param data
+ */
+export function register (data) {
+  return request({
+    url: constants.api.register + '?username=' + data.username + '&password=' + data.password + '&repassword=' + data.password,
+    method: 'post',
+    header: data
+  })
+}
