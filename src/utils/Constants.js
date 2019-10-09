@@ -2,9 +2,17 @@ var constants = {
   api: {
     host: 'api/',
     // 用户相关
-    login: '/user/login',
-    register: '/user/register',
-    logout: '/user/logout/json',
+    login: '/user/login.do',
+    register: '/user/register.do',
+    checkVaild: '/user/check_valid.do',
+    getUserInfo: '/user/get_user_info.do',
+    forgetPassword: '/user/forget_get_question.do',
+    answerQuestion: '/user/forget_check_answer.do',
+    resetPassword: '/user/forget_reset_password.do',
+    loginResetPassword: '/user/reset_password.do',
+    updateUserInfo: '/user/update_information.do',
+    getUserDetailInfo: '/user/get_information.do',
+    logout: ' /user/logout.do',
     // 字典
     hotKey: '/hotkey/json',
     hotWeb: '/friend/json',
@@ -34,8 +42,11 @@ var constants = {
     userCoinList: '/lg/coin/list/1/json'
   },
   code: {
-    logout: -1001,
-    success: 0
+    success: 0,
+    failed: 1
+  },
+  responceCode: {
+    success: 200
   }
 }
 

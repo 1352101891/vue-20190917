@@ -1,6 +1,7 @@
 /* eslint-disable prefer-promise-reject-errors */
 import { login, logout, getInfo, register } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import constants from '../../utils/Constants'
 
 const state = {
   token: getToken(),
@@ -28,16 +29,29 @@ const mutations = {
   }
 }
 
+/**
+ *
+  {
+    "data":null,
+    "errorCode":-1,
+    "errorMsg":"账号密码不匹配！"
+  }
+    {"data":{"admin":false,"chapterTops":[],"collectIds":[],"email":"","icon":"","id":31516,"nickname":"123456110","password":"","publicName":"123456110","token":"","type":0,"username":"123456110"},"errorCode":0,"errorMsg":""}
+ */
 const actions = {
   // user login
   login ({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken('SET_TOKEN')
-        resolve()
+        console.log('返回格式：' + JSON.stringify(response))
+        if (response.errorCode === constants.code.failed) {
+          reject(response.errorMsg)
+        } else {
+          commit('SET_TOKEN', response.token)
+          setToken('SET_TOKEN')
+          resolve(response.data)
+        }
       }).catch(error => {
         reject(error)
       })
@@ -49,10 +63,14 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       register({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken('SET_TOKEN')
-        resolve()
+        console.log('返回格式：' + JSON.stringify(response))
+        if (response.errorCode === constants.code.failed) {
+          reject(response.errorMsg)
+        } else {
+          commit('SET_TOKEN', response.token)
+          setToken('SET_TOKEN')
+          resolve(response.data)
+        }
       }).catch(error => {
         reject(error)
       })

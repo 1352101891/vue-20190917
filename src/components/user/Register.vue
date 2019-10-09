@@ -57,13 +57,8 @@ export default {
   methods: {
     register () {
       console.log('点击了注册')
-      var that = this
       if (!this.username || this.username.length < 3) {
-        const toast = that.$createToast({
-          txt: '用户名过短！',
-          time: 1000
-        })
-        toast.show()
+        this.showToast('用户名过短！')
         return
       }
       if (this.password && this.surePassword && this.password === this.surePassword) {
@@ -75,19 +70,18 @@ export default {
           console.log('用户登陆成功')
           this.$router.replace('main')
         }).catch(error => {
-          const toast = that.$createToast({
-            txt: '登陆失败：' + error.toString(),
-            time: 1000
-          })
-          toast.show()
+          this.showToast(error.toString())
         })
       } else {
-        const toast = that.$createToast({
-          txt: '两次密码输入不一致！',
-          time: 1000
-        })
-        toast.show()
+        this.showToast('两次密码输入不一致！')
       }
+    },
+    showToast (message) {
+      const toast = this.$createToast({
+        txt: '提示：' + message,
+        time: 1000
+      })
+      toast.show()
     }
   }
 }

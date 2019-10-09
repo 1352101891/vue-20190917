@@ -57,16 +57,11 @@ export default {
   methods: {
     gotoRegister () {
       console.log('点击了注册')
-      this.$router.push(this.redirectPath)
+      this.$router.push('register')
     },
     login () {
-      let that = this
       if (!this.username || this.username.length < 3) {
-        const toast = that.$createToast({
-          txt: '用户名过短！',
-          time: 1000
-        })
-        toast.show()
+        this.showToast('用户名过短！')
         return
       }
       let userInfo = {
@@ -77,12 +72,16 @@ export default {
         console.log('用户登陆成功')
         this.$router.replace('main')
       }).catch(error => {
-        const toast = that.$createToast({
-          txt: '登陆失败：' + error.toString(),
-          time: 1000
-        })
-        toast.show()
+        console.log('error:' + error.toString())
+        this.showToast(error.toString())
       })
+    },
+    showToast (message) {
+      const toast = this.$createToast({
+        txt: '提示：' + message,
+        time: 1000
+      })
+      toast.show()
     }
   }
 }
